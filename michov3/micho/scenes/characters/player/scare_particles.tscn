@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://b0oai1i2xh745"]
+
+[ext_resource type="Shader" uid="uid://1id84kbsfviy" path="res://scenes/characters/player/scare_particles.gdshader" id="1_soh8c"]
+[ext_resource type="Script" uid="uid://bj3pcatxio0tx" path="res://scenes/characters/player/scare_particles.gd" id="1_u1mhy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u1mhy"]
+shader = ExtResource("1_soh8c")
+
+[node name="GPUParticles2D" type="GPUParticles2D"]
+modulate = Color(0.0018410678, 0.0018410682, 0.0018410678, 1)
+z_index = 10
+emitting = false
+amount = 25
+lifetime = 0.6900000000000001
+one_shot = true
+explosiveness = 0.8
+process_material = SubResource("ShaderMaterial_u1mhy")
+script = ExtResource("1_u1mhy")

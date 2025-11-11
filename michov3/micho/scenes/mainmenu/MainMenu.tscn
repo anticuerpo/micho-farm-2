@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://62fn82e88t2a"]
+
+[ext_resource type="Script" uid="uid://dmh836gk12hdk" path="res://scenes/mainmenu/main_menu.gd" id="1_72cw5"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_72cw5")
+
+[node name="Control" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="Control/VBoxContainer/Label"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="Button2" type="Button" parent="Control/VBoxContainer/Label"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
