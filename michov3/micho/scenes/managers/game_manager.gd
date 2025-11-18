@@ -303,6 +303,12 @@ func check_level_completion():
 
 func trigger_level_complete():
 	level_completed.emit()
+
+	# Desbloquear tienda después del nivel 1
+	if current_level == 1 and has_node("/root/SceneManager"):
+		if not SceneManager.player_data.shop_unlocked:
+			SceneManager.unlock_shop()
+
 	_mostrar_pantalla_victoria()
 
 func trigger_game_over():
@@ -375,7 +381,13 @@ func _mostrar_pantalla_victoria():
 	# Mensaje
 	var mensaje = Label.new()
 	var texto_nivel = "Nivel %d" % current_level
-	mensaje.text = "¡Has completado el %s!\n✨ Catnip ganado: %d ✨" % [texto_nivel, current_score]
+	var texto_base = "¡Has completado el %s!\n✨ Catnip ganado: %d ✨" % [texto_nivel, current_score]
+
+	# Añadir mensaje de tienda desbloqueada si es nivel 1
+	if current_level == 1 and SceneManager.player_data.shop_unlocked:
+		texto_base += "\n\n🏪 ¡La tienda ha sido desbloqueada!\nBusca la casita en el mapa"
+
+	mensaje.text = texto_base
 	mensaje.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	mensaje.add_theme_font_size_override("font_size", 18)
 	mensaje.add_theme_color_override("font_color", Color(0.4, 0.6, 0.4))

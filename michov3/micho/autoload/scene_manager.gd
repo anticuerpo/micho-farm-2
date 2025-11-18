@@ -8,6 +8,9 @@ var current_scene: String = ""
 var player_data: Dictionary = {
 	"catnip": 0,
 	"plantas_plantadas": 0,
+	"shop_unlocked": false,
+	"last_position": Vector2.ZERO,
+	"last_scene": "",
 	"mejoras": {
 		"velocidad": 1.0,
 		"capacidad_bolsa": 10
@@ -29,8 +32,15 @@ func reset_player_data():
 	player_data = {
 		"catnip": 0,
 		"plantas_plantadas": 0,
+		"shop_unlocked": false,
+		"last_position": Vector2.ZERO,
+		"last_scene": "",
 		"mejoras": {
 			"velocidad": 1.0,
 			"capacidad_bolsa": 10
 		}
 	}
+
+func unlock_shop():
+	player_data.shop_unlocked = true
+	print("¡La tienda ha sido desbloqueada!")
