@@ -405,11 +405,11 @@ func _mostrar_pantalla_victoria():
 	
 	btn_tienda.pressed.connect(func():
 		# Animación de fade out
-		var tween = create_tween()
-		tween.set_parallel(true)
-		tween.tween_property(overlay, "modulate:a", 0.0, 0.3)
-		tween.tween_property(victoria_panel, "modulate:a", 0.0, 0.3)
-		await tween.finished
+		var fade_tween = create_tween()
+		fade_tween.set_parallel(true)
+		fade_tween.tween_property(overlay, "modulate:a", 0.0, 0.3)
+		fade_tween.tween_property(victoria_panel, "modulate:a", 0.0, 0.3)
+		await fade_tween.finished
 
 		# Cambiar a la tienda
 		get_tree().change_scene_to_file("res://scenes/tienda/tienda.tscn")
