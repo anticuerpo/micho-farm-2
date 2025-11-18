@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://c65xk0evkh02n"]
+
+[ext_resource type="Texture2D" uid="uid://ofnguo4tml1w" path="res://assets/game/characters/gato-tienda.png" id="1_mq5rc"]
+[ext_resource type="PackedScene" uid="uid://gd8vc3vmis18" path="res://scenes/tienda/InteractableComponent.tscn" id="2_bhkvu"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mq5rc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_mq5rc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dcugo"]
+size = Vector2(15, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xkui4"]
+
+[node name="Gati" type="Node2D"]
+
+[node name="ShopCat" type="CharacterBody2D" parent="."]
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="ShopCat"]
+sprite_frames = SubResource("SpriteFrames_mq5rc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShopCat"]
+position = Vector2(-0.5, -2)
+shape = SubResource("RectangleShape2D_dcugo")
+
+[node name="InteractableComponent" parent="ShopCat" instance=ExtResource("2_bhkvu")]
+position = Vector2(-1, -4)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShopCat/InteractableComponent"]
+position = Vector2(1, 2)
+shape = SubResource("RectangleShape2D_xkui4")
+
+[node name="InteractionLabel" type="Label" parent="ShopCat"]
+offset_left = -35.0
+offset_top = -36.0
+offset_right = 40.0
+offset_bottom = -13.0
+text = "E - Hablar"
