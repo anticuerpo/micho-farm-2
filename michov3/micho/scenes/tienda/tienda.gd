@@ -10,17 +10,17 @@ var shop_items: Array = []
 # Precios de mejoras
 var mejoras_config = {
 	"velocidad": {
-		"nombre": "⚡ Botas Rápidas",
-		"descripcion": "¡Corre más rápido!",
+		"nombre": "Botas Rápidas",
+		"descripcion": "Aumenta tu velocidad",
 		"precio_base": 50,
 		"incremento": 1.5,
 		"max_nivel": 5,
-		"emoji": "👟",
+		"emoji": "⚡",
 		"color": Color(0.9, 0.85, 0.6)  # Amarillo pastel
 	},
 	"capacidad_bolsa": {
-		"nombre": "🎒 Bolsa Grande",
-		"descripcion": "Lleva más plantas",
+		"nombre": "Bolsa Grande",
+		"descripcion": "Aumenta tu capacidad",
 		"precio_base": 75,
 		"incremento": 1.4,
 		"max_nivel": 5,
@@ -87,7 +87,7 @@ func _crear_ui_tienda():
 
 	# Mensaje de bienvenida
 	var mensaje = Label.new()
-	mensaje.text = "🏪 ¡Bienvenido a la tienda de Don Bigotes! 🐱"
+	mensaje.text = "Bienvenido a la tienda"
 	mensaje.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	mensaje.add_theme_font_size_override("font_size", 18)
 	mensaje.add_theme_color_override("font_color", Color(0.5, 0.4, 0.6))
@@ -108,7 +108,7 @@ func _crear_ui_tienda():
 	vbox.add_child(_crear_spacer(20))
 
 	# Botón de salir
-	var btn_salir = _crear_boton_kawaii("🌙 VOLVER AL MENÚ", Color(0.95, 0.8, 0.85))
+	var btn_salir = _crear_boton_kawaii("VOLVER AL MENÚ", Color(0.95, 0.8, 0.85))
 	btn_salir.pressed.connect(_on_salir_pressed)
 	btn_salir.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	vbox.add_child(btn_salir)
@@ -123,14 +123,14 @@ func _crear_header(parent: Control):
 	header_container.add_theme_constant_override("separation", 5)
 
 	var titulo = Label.new()
-	titulo.text = "✨ TIENDA MÁGICA ✨"
+	titulo.text = "TIENDA"
 	titulo.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	titulo.add_theme_font_size_override("font_size", 42)
 	titulo.add_theme_color_override("font_color", Color(0.5, 0.3, 0.6))
 	header_container.add_child(titulo)
 
 	var subtitulo = Label.new()
-	subtitulo.text = "♡ Mejora tus habilidades ♡"
+	subtitulo.text = "Mejora tus habilidades"
 	subtitulo.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	subtitulo.add_theme_font_size_override("font_size", 16)
 	subtitulo.add_theme_color_override("font_color", Color(0.6, 0.5, 0.7, 0.8))
@@ -227,10 +227,10 @@ func _crear_item_mejora(parent: Control, tipo_mejora: String):
 	var nivel_label = Label.new()
 	nivel_label.name = "NivelLabel"
 	if nivel_actual >= config.max_nivel:
-		nivel_label.text = "✨ ¡NIVEL MÁXIMO! ✨"
+		nivel_label.text = "NIVEL MÁXIMO"
 		nivel_label.add_theme_color_override("font_color", Color(1.0, 0.7, 0.3))
 	else:
-		nivel_label.text = "Nivel actual: %d/%d" % [nivel_actual, config.max_nivel]
+		nivel_label.text = "Nivel: %d/%d" % [nivel_actual, config.max_nivel]
 		nivel_label.add_theme_color_override("font_color", Color(0.4, 0.6, 0.8))
 	nivel_label.add_theme_font_size_override("font_size", 14)
 	info_vbox.add_child(nivel_label)
@@ -263,7 +263,7 @@ func _crear_boton_compra(tipo_mejora: String, precio: int, max_nivel: bool) -> B
 	btn.custom_minimum_size = Vector2(160, 60)
 
 	if max_nivel:
-		btn.text = "✓ MÁXIMO"
+		btn.text = "MÁXIMO"
 		btn.disabled = true
 		btn.add_theme_font_size_override("font_size", 16)
 
@@ -273,7 +273,7 @@ func _crear_boton_compra(tipo_mejora: String, precio: int, max_nivel: bool) -> B
 		btn.add_theme_stylebox_override("normal", style)
 		btn.add_theme_stylebox_override("disabled", style)
 	else:
-		btn.text = "💰 %d\nComprar" % precio
+		btn.text = "%d\nComprar" % precio
 		btn.add_theme_font_size_override("font_size", 16)
 		btn.add_theme_color_override("font_color", Color(0.3, 0.5, 0.3))
 
@@ -313,18 +313,8 @@ func _crear_boton_compra(tipo_mejora: String, precio: int, max_nivel: bool) -> B
 	return btn
 
 func _crear_decoraciones():
-	# Estrellas decorativas
-	for i in range(8):
-		var estrella = Label.new()
-		estrella.text = ["⭐", "✨", "💫"][randi() % 3]
-		estrella.add_theme_font_size_override("font_size", 24 + randi() % 20)
-		estrella.position = Vector2(randf() * 1000, randf() * 600)
-		main_container.add_child(estrella)
-
-		# Animación flotante
-		var tween = create_tween().set_loops()
-		tween.tween_property(estrella, "position:y", estrella.position.y + 15, 2.0 + randf() * 2.0)
-		tween.tween_property(estrella, "position:y", estrella.position.y, 2.0 + randf() * 2.0)
+	# Sin decoraciones para mantener la UI limpia
+	pass
 
 func _crear_panel_kawaii() -> StyleBoxFlat:
 	var style = StyleBoxFlat.new()
@@ -435,12 +425,12 @@ func _on_comprar_mejora(tipo_mejora: String):
 
 	# Verificar si tiene suficiente dinero
 	if catnip < precio:
-		_mostrar_mensaje_error("💔 ¡No tienes suficiente catnip!")
+		_mostrar_mensaje_error("No tienes suficiente catnip")
 		return
 
 	# Verificar si ya está al máximo
 	if nivel_actual >= config.max_nivel:
-		_mostrar_mensaje_error("✨ ¡Ya tienes el nivel máximo!")
+		_mostrar_mensaje_error("Ya tienes el nivel máximo")
 		return
 
 	# Realizar la compra
@@ -448,15 +438,15 @@ func _on_comprar_mejora(tipo_mejora: String):
 
 	# Aplicar la mejora
 	if tipo_mejora == "velocidad":
-		SceneManager.player_data.mejoras.velocidad += 0.2
+		SceneManager.player_data.mejoras["velocidad"] += 0.2
 	elif tipo_mejora == "capacidad_bolsa":
-		SceneManager.player_data.mejoras.capacidad_bolsa += 5
+		SceneManager.player_data.mejoras["capacidad_bolsa"] += 5
 
 	# Efectos de sonido y visuales
-	if AudioManager:
+	if has_node("/root/AudioManager") and AudioManager.has_method("play_sfx"):
 		AudioManager.play_sfx("points")
 
-	_mostrar_mensaje_exito("✨ ¡Compra exitosa! ✨")
+	_mostrar_mensaje_exito("¡Compra exitosa!")
 
 	# Actualizar UI
 	_actualizar_dinero()
@@ -473,10 +463,10 @@ func _actualizar_item_ui(tipo_mejora: String):
 			# Actualizar label de nivel
 			var nivel_label = item.nivel_label
 			if nivel_actual >= config.max_nivel:
-				nivel_label.text = "✨ ¡NIVEL MÁXIMO! ✨"
+				nivel_label.text = "NIVEL MÁXIMO"
 				nivel_label.add_theme_color_override("font_color", Color(1.0, 0.7, 0.3))
 			else:
-				nivel_label.text = "Nivel actual: %d/%d" % [nivel_actual, config.max_nivel]
+				nivel_label.text = "Nivel: %d/%d" % [nivel_actual, config.max_nivel]
 
 			# Actualizar botón
 			var boton_viejo = item.boton
@@ -565,4 +555,4 @@ func _on_salir_pressed():
 	await tween.finished
 
 	# Volver al menú principal
-	SceneManager.change_scene("res://scenes/mainmenu/MainMenu.tscn")
+	get_tree().change_scene_to_file("res://scenes/mainmenu/MainMenu.tscn")
