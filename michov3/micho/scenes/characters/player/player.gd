@@ -1,8 +1,10 @@
 class_name Player
 extends CharacterBody2D
-
+@onready var particulas = $ParticulasPisadas  # Asegúrate del nombre correcto
 @export var current_tool: DataTypes.Tools = DataTypes.Tools.None
 @export var plant_scene: PackedScene  # Asigna la escena de la planta en el inspector
+var intentos_ahuyentar = 0  # Contador
+var dialogo_mostrado = false  # Para que no se repita infinitamente
 
 var player_direction: Vector2 = Vector2.DOWN
 var is_interacting: bool = false
@@ -33,6 +35,10 @@ func _process(delta):
 		last_interaction_time -= delta
 	if last_scare_time > 0:
 		last_scare_time -= delta
+	if velocity.length() > 10:
+		particulas.emitting = true
+	else:
+		particulas.emitting = false
 
 # Ahuyentar enemigos con ESPACIO
 func attempt_scare_enemies():
@@ -43,6 +49,7 @@ func attempt_scare_enemies():
 	
 	print("¡Intentando ahuyentar enemigos!")
 	last_scare_time = current_time
+	
 	
 	# Mostrar efecto visual del grito
 	show_scare_effect()
@@ -59,12 +66,16 @@ func attempt_scare_enemies():
 				if enemy.has_method("scare_away"):
 					enemy.scare_away(global_position)
 					enemies_scared += 1
-	
 	if enemies_scared > 0:
 		print("¡Ahuyentados ", enemies_scared, " enemigos!")
+		# Contador de intentos
+		intentos_ahuyentar += 1
+		print("Intentos de ahuyentar: ", intentos_ahuyentar)
+		
+		if intentos_ahuyentar >= 3 and not dialogo_mostrado:
+			mostrar_dialogo_5_intentos()
 	else:
 		print("No hay enemigos cerca para ahuyentar")
-
 # Efecto visual simple para el grito - SOLUCIÓN RÁPIDA
 func show_scare_effect():
 	# Crear una onda de choque visual
@@ -197,3 +208,64 @@ func set_tool(new_tool: DataTypes.Tools):
 # Método para obtener la herramienta actual
 func get_current_tool() -> DataTypes.Tools:
 	return current_tool
+func mostrar_dialogo_5_intentos():
+	mostrar_burbuja_bonita("¡Ya van 4 veces que espanto a estos bichos!")
+	intentos_ahuyentar = 0
+
+func mostrar_burbuja_bonita(texto: String):
+	# Panel de fondo (la burbuja) - MÁS PEQUEÑA
+	var panel = Panel.new()
+	panel.custom_minimum_size = Vector2(120, 40)
+	panel.position = Vector2(-60, -60)
+	
+	# Estilo del panel
+	var stylebox = StyleBoxFlat.new()
+	stylebox.bg_color = Color(1, 1, 1, 0.95)
+	stylebox.border_color = Color(0.2, 0.2, 0.2, 1)
+	
+	# Bordes individuales en lugar de border_width_all
+	stylebox.set_border_width(SIDE_LEFT, 2)
+	stylebox.set_border_width(SIDE_TOP, 2)
+	stylebox.set_border_width(SIDE_RIGHT, 2)
+	stylebox.set_border_width(SIDE_BOTTOM, 2)
+	
+	# Esquinas redondeadas
+	stylebox.set_corner_radius(CORNER_TOP_LEFT, 8)
+	stylebox.set_corner_radius(CORNER_TOP_RIGHT, 8)
+	stylebox.set_corner_radius(CORNER_BOTTOM_LEFT, 8)
+	stylebox.set_corner_radius(CORNER_BOTTOM_RIGHT, 8)
+	
+	# Márgenes
+	stylebox.content_margin_left = 8
+	stylebox.content_margin_right = 8
+	stylebox.content_margin_top = 6
+	stylebox.content_margin_bottom = 6
+	
+	panel.add_theme_stylebox_override("panel", stylebox)
+	add_child(panel)
+	
+	# Texto
+	var label = Label.new()
+	label.text = texto
+	label.add_theme_font_size_override("font_size", 9)
+	label.add_theme_color_override("font_color", Color(0, 0, 0, 1))
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD
+	label.custom_minimum_size = Vector2(104, 28)
+	label.position = Vector2(8, 6)
+	
+	panel.add_child(label)
+	
+	# Animación
+	panel.modulate.a = 0
+	var tween = create_tween()
+	tween.tween_property(panel, "modulate:a", 1.0, 0.2)
+	
+	await get_tree().create_timer(2.5).timeout
+	
+	var tween2 = create_tween()
+	tween2.tween_property(panel, "modulate:a", 0.0, 0.3)
+	await tween2.finished
+	
+	panel.queue_free()

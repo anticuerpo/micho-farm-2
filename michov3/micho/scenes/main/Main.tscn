@@ -1,12 +1,26 @@
-[gd_scene load_steps=6 format=4 uid="uid://cxd8ftys21v34"]
+[gd_scene load_steps=10 format=4 uid="uid://cxd8ftys21v34"]
 
+[ext_resource type="Script" uid="uid://dt7pftxr1mjr0" path="res://scenes/main/main.gd" id="1_1rhdn"]
 [ext_resource type="TileSet" uid="uid://cs0aoka33qb0d" path="res://Tilesets/game_tile_set.tres" id="1_efddr"]
 [ext_resource type="PackedScene" uid="uid://dbw1o7k57og33" path="res://scenes/characters/player/player.tscn" id="2_v70oj"]
+[ext_resource type="Texture2D" uid="uid://sofesdg8tfxl" path="res://assets/game/objects/Free_Chicken_House.png" id="3_ko0rf"]
 [ext_resource type="Script" uid="uid://c0erpoadfneqs" path="res://scenes/managers/game_manager.gd" id="3_q24mn"]
 [ext_resource type="PackedScene" uid="uid://c6ov4oaydngcb" path="res://scenes/objects/trees/small_tree.tscn" id="4_1rhdn"]
 [ext_resource type="PackedScene" uid="uid://ctvhvi08inkp" path="res://scenes/enemies/enemy.tscn" id="4_dc040"]
+[ext_resource type="Texture2D" uid="uid://c6mlha4eewuv2" path="res://assets/Sprout Lands - UI Pack - Basic pack/emojis-free/star2.png" id="4_sjxhf"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_sjxhf"]
+particle_flag_disable_z = true
+emission_shape = 4
+emission_point_count = 1
+angle_min = -217.2
+angle_max = -171.49998
+gravity = Vector3(0, 98, 0)
+scale_min = 0.7
+scale_max = 0.7
 
 [node name="Main" type="Node2D"]
+script = ExtResource("1_1rhdn")
 
 [node name="GameTileMap" type="Node2D" parent="."]
 
@@ -24,16 +38,31 @@ tile_map_data = PackedByteArray("AAAOAAMABAAAAAAAAQA=")
 tile_set = ExtResource("1_efddr")
 
 [node name="Nature" type="TileMapLayer" parent="GameTileMap"]
-tile_map_data = PackedByteArray("AAAOAAwAAwAIAAIAAAAQAA0AAwAEAAIAAAAdAA4AAwAEAAIAAAACAAEAAwADAAAAAAAmAAIAAwADAAAAAAAoABIAAwADAAAAAAAlAAkAAwADAAAAAAADABIAAwADAAAAAAAcAAQAAwADAAAAAAAoAA4AAwAFAAAAAAAkAAYAAwAFAAAAAAAfAAIAAwAFAAAAAAAqAAIAAwAFAAAAAAABAAMAAwAFAAAAAAAAABMAAwAFAAAAAAAqABQAAwAFAAQAAAAnAAMAAwAFAAQAAAADAAIAAwAFAAQAAAD//xQAAwAFAAQAAAAKAAAAAwAFAAQAAAAgAAMAAwAFAAQAAAAZAAAAAwAGAAEAAAAjAP//AwAGAAEAAAArAAgAAwAGAAEAAAAqABEAAwAGAAEAAAAjABMAAwAGAAEAAAAKAAMAAwAGAAEAAAANAAcAAwAGAAEAAAAUABMAAwAGAAEAAAAUAA4AAwAGAAEAAAAJAA8AAwAGAAEAAAABAAwAAwAGAAEAAAAsAP7/AwAIAAIAAAAsABQAAwAIAAIAAAAGAP//AwAHAAMAAAAFAAUAAwAHAAMAAAABAAkAAwAHAAMAAAA=")
+tile_map_data = PackedByteArray("AAAOAAwAAwAIAAIAAAAQAA0AAwAEAAIAAAAdAA4AAwAEAAIAAAACAAEAAwADAAAAAAAmAAIAAwADAAAAAAAoABIAAwADAAAAAAAlAAkAAwADAAAAAAADABIAAwADAAAAAAAcAAQAAwADAAAAAAAoAA4AAwAFAAAAAAAkAAYAAwAFAAAAAAAfAAIAAwAFAAAAAAAqAAIAAwAFAAAAAAABAAMAAwAFAAAAAAAAABMAAwAFAAAAAAAqABQAAwAFAAQAAAAnAAMAAwAFAAQAAAADAAIAAwAFAAQAAAD//xQAAwAFAAQAAAAKAAAAAwAFAAQAAAAgAAMAAwAFAAQAAAAZAAAAAwAGAAEAAAAjAP//AwAGAAEAAAArAAgAAwAGAAEAAAAqABEAAwAGAAEAAAAjABMAAwAGAAEAAAAKAAMAAwAGAAEAAAANAAcAAwAGAAEAAAAUABMAAwAGAAEAAAAUAA4AAwAGAAEAAAABAAwAAwAGAAEAAAAsAP7/AwAIAAIAAAAsABQAAwAIAAIAAAAGAP//AwAHAAMAAAAFAAUAAwAHAAMAAAABAAkAAwAHAAMAAAAIAAIAAwAHAAIAAAA=")
 tile_set = ExtResource("1_efddr")
 
 [node name="TilledDirt" type="TileMapLayer" parent="GameTileMap"]
 tile_map_data = PackedByteArray("AAAWAAkAAgAAAAAAAAAWAAoAAgAAAAEAAAAWAAsAAgAAAAIAAAAXAAkAAgABAAAAAAAXAAoAAgABAAEAAAAXAAsAAgABAAIAAAAYAAkAAgACAAAAAAAYAAoAAgACAAEAAAAYAAsAAgACAAIAAAAWAAwAAgAAAAAAAAAWAA0AAgAAAAEAAAAWAA4AAgAAAAIAAAAXAAwAAgABAAAAAAAXAA0AAgABAAEAAAAXAA4AAgABAAIAAAAYAAwAAgACAAAAAAAYAA0AAgACAAEAAAAYAA4AAgACAAIAAAAWAA8AAgAAAAAAAAAWABAAAgAAAAEAAAAWABEAAgAAAAIAAAAXAA8AAgABAAAAAAAXABAAAgABAAEAAAAXABEAAgABAAIAAAAYAA8AAgACAAAAAAAYABAAAgACAAEAAAAYABEAAgACAAIAAAAZAAkAAgAAAAAAAAAZAAoAAgAAAAEAAAAZAAsAAgAAAAIAAAAaAAkAAgABAAAAAAAaAAoAAgABAAEAAAAaAAsAAgABAAIAAAAbAAkAAgACAAAAAAAbAAoAAgACAAEAAAAbAAsAAgACAAIAAAAZAAwAAgAAAAAAAAAZAA0AAgAAAAEAAAAZAA4AAgAAAAIAAAAaAAwAAgABAAAAAAAaAA0AAgABAAEAAAAaAA4AAgABAAIAAAAbAAwAAgACAAAAAAAbAA0AAgACAAEAAAAbAA4AAgACAAIAAAAZAA8AAgAAAAAAAAAZABAAAgAAAAEAAAAZABEAAgAAAAIAAAAaAA8AAgABAAAAAAAaABAAAgABAAEAAAAaABEAAgABAAIAAAAbAA8AAgACAAAAAAAbABAAAgACAAEAAAAbABEAAgACAAIAAAAGAAgAAgAAAAAAAAAGAAkAAgAAAAEAAAAGAAoAAgAAAAIAAAAHAAgAAgABAAAAAAAHAAkAAgABAAEAAAAHAAoAAgABAAIAAAAIAAgAAgACAAAAAAAIAAkAAgACAAEAAAAIAAoAAgACAAIAAAAGAAsAAgAAAAAAAAAGAAwAAgAAAAEAAAAGAA0AAgAAAAIAAAAHAAsAAgABAAAAAAAHAAwAAgABAAEAAAAHAA0AAgABAAIAAAAIAAsAAgACAAAAAAAIAAwAAgACAAEAAAAIAA0AAgACAAIAAAAGAA4AAgAAAAAAAAAGAA8AAgAAAAEAAAAGABAAAgAAAAIAAAAHAA4AAgABAAAAAAAHAA8AAgABAAEAAAAHABAAAgABAAIAAAAIAA4AAgACAAAAAAAIAA8AAgACAAEAAAAIABAAAgACAAIAAAAJAAgAAgAAAAAAAAAJAAkAAgAAAAEAAAAJAAoAAgAAAAIAAAAKAAgAAgABAAAAAAAKAAkAAgABAAEAAAAKAAoAAgABAAIAAAALAAgAAgACAAAAAAALAAkAAgACAAEAAAALAAoAAgACAAIAAAAJAAsAAgAAAAAAAAAJAAwAAgAAAAEAAAAJAA0AAgAAAAIAAAAKAAsAAgABAAAAAAAKAAwAAgABAAEAAAAKAA0AAgABAAIAAAALAAsAAgACAAAAAAALAAwAAgACAAEAAAALAA0AAgACAAIAAAAJAA4AAgAAAAAAAAAJAA8AAgAAAAEAAAAJABAAAgAAAAIAAAAKAA4AAgABAAAAAAAKAA8AAgABAAEAAAAKABAAAgABAAIAAAALAA4AAgACAAAAAAALAA8AAgACAAEAAAALABAAAgACAAIAAAA=")
 tile_set = ExtResource("1_efddr")
 
+[node name="FreeChickenHouse" type="Sprite2D" parent="GameTileMap"]
+position = Vector2(422, 82)
+texture = ExtResource("3_ko0rf")
+
 [node name="Player" parent="." instance=ExtResource("2_v70oj")]
-position = Vector2(306, 191)
+position = Vector2(326, 176)
 current_tool = 0
+
+[node name="ParticulasPisadas" type="GPUParticles2D" parent="Player"]
+visibility_layer = 5
+position = Vector2(0, 1)
+scale = Vector2(0.94146436, 1.0792928)
+amount = 4
+texture = ExtResource("4_sjxhf")
+lifetime = 1.07
+speed_scale = 0.5
+randomness = 0.2
+process_material = SubResource("ParticleProcessMaterial_sjxhf")
 
 [node name="PlantsContainer" type="Node2D" parent="."]
 
@@ -73,7 +102,7 @@ position = Vector2(218, 263)
 position = Vector2(235, 215)
 
 [node name="Enemy6" parent="EnemiesContainer" instance=ExtResource("4_dc040")]
-position = Vector2(287, 192)
+position = Vector2(242, 178)
 
 [node name="Enemy7" parent="EnemiesContainer" instance=ExtResource("4_dc040")]
 position = Vector2(415, 196)
@@ -85,16 +114,3 @@ position = Vector2(274, 311)
 script = ExtResource("3_q24mn")
 
 [node name="UI" type="CanvasLayer" parent="."]
-
-[node name="ScoreLabel" type="Label" parent="UI"]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -240.0
-offset_top = 11.0
-offset_right = -10.0
-offset_bottom = 51.0
-grow_horizontal = 0
-theme_override_font_sizes/font_size = 20
-text = "Puntos: 0 | Plantas: 0/5 "
-horizontal_alignment = 2

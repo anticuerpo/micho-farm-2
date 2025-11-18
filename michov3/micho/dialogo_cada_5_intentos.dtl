@@ -1,0 +1,4 @@
+[style name="burbuja"]
+join Protagonista 1 [animation="Instant"]
+Protagonista: ¡Ya van 4 veces que ahuyento a estos bichos!
+leave Protagonista [animation="Instant"]

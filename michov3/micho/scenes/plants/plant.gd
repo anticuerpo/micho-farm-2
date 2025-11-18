@@ -4,7 +4,7 @@ extends Area2D
 enum PlantState { EMPTY, SEED, SPROUT, MATURE }
 
 # Variables exportadas
-@export var growth_time = 5 # Tiempo total de crecimiento en segundos
+@export var growth_time = 10 # Tiempo total de crecimiento en segundos
 
 # Referencias
 @onready var sprite = $Sprite2D
