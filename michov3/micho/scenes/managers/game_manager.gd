@@ -408,7 +408,7 @@ func _mostrar_pantalla_victoria():
 		victoria_panel.queue_free()
 		await get_tree().process_frame
 		if has_node("/root/SceneManager"):
-			SceneManager.change_scene("res://Shop.tscn")
+			SceneManager.change_scene("res://scenes/tienda/tienda.tscn")
 		else:
 			get_tree().reload_current_scene()
 	)
