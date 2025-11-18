@@ -404,13 +404,15 @@ func _mostrar_pantalla_victoria():
 	btn_tienda.add_theme_stylebox_override("normal", style_btn_tienda)
 	
 	btn_tienda.pressed.connect(func():
-		overlay.queue_free()
-		victoria_panel.queue_free()
-		await get_tree().process_frame
-		if has_node("/root/SceneManager"):
-			SceneManager.change_scene("res://scenes/tienda/tienda.tscn")
-		else:
-			get_tree().reload_current_scene()
+		# Animación de fade out
+		var tween = create_tween()
+		tween.set_parallel(true)
+		tween.tween_property(overlay, "modulate:a", 0.0, 0.3)
+		tween.tween_property(victoria_panel, "modulate:a", 0.0, 0.3)
+		await tween.finished
+
+		# Cambiar a la tienda
+		get_tree().change_scene_to_file("res://scenes/tienda/tienda.tscn")
 	)
 	
 	vbox_victoria.add_child(btn_tienda)
