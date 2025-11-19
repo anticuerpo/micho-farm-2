@@ -45,10 +45,8 @@ func _open_shop():
 
 	# Primero mostrar el diálogo
 	if has_node("/root/Dialogic"):
-		var dialogo = Dialogic.start("tienda_dialogo")
-
-		# Cuando termine el diálogo, abrir la tienda
-		dialogo.timeline_ended.connect(_abrir_ui_tienda)
+		Dialogic.timeline_ended.connect(_abrir_ui_tienda)
+		Dialogic.start("tienda_dialogo")
 	else:
 		# Si no hay Dialogic, abrir directamente
 		_abrir_ui_tienda()
