@@ -41,7 +41,20 @@ func _on_player_exited():
 	interaction_label.visible = false
 
 func _open_shop():
-	print("Abriendo tienda...")
+	print("Abriendo diálogo de tienda...")
+
+	# Primero mostrar el diálogo
+	if has_node("/root/Dialogic"):
+		var dialogo = Dialogic.start("tienda_dialogo")
+
+		# Cuando termine el diálogo, abrir la tienda
+		dialogo.timeline_ended.connect(_abrir_ui_tienda)
+	else:
+		# Si no hay Dialogic, abrir directamente
+		_abrir_ui_tienda()
+
+func _abrir_ui_tienda():
+	print("Abriendo UI de tienda...")
 
 	# Crear la UI de tienda como overlay
 	var shop_ui_scene = load("res://scenes/tienda/tienda_ui.tscn")
