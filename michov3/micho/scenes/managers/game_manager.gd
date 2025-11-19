@@ -416,6 +416,9 @@ func _mostrar_pantalla_victoria():
 	btn_continuar.add_theme_stylebox_override("normal", style_btn_continuar)
 
 	btn_continuar.pressed.connect(func():
+		# Deshabilitar el botón para evitar múltiples clicks
+		btn_continuar.disabled = true
+
 		# Animación de fade out
 		var fade_tween = create_tween()
 		fade_tween.set_parallel(true)
@@ -423,8 +426,11 @@ func _mostrar_pantalla_victoria():
 		fade_tween.tween_property(victoria_panel, "modulate:a", 0.0, 0.3)
 		await fade_tween.finished
 
-		overlay.queue_free()
-		victoria_panel.queue_free()
+		# Verificar que aún existan antes de liberar
+		if is_instance_valid(overlay):
+			overlay.queue_free()
+		if is_instance_valid(victoria_panel):
+			victoria_panel.queue_free()
 	)
 
 	vbox_victoria.add_child(btn_continuar)
