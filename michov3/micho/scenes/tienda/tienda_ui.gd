@@ -100,12 +100,24 @@ func _crear_ui_tienda():
 
 	vbox.add_child(_crear_spacer(20))
 
+	# HBox para botones
+	var buttons_hbox = HBoxContainer.new()
+	buttons_hbox.add_theme_constant_override("separation", 15)
+	buttons_hbox.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+
+	# Botón ir a nivel 2
+	var btn_nivel2 = _crear_boton_kawaii("IR A NIVEL 2", Color(0.7, 0.9, 0.7))
+	btn_nivel2.pressed.connect(_on_nivel2_pressed)
+	btn_nivel2.custom_minimum_size = Vector2(180, 55)
+	buttons_hbox.add_child(btn_nivel2)
+
 	# Botón cerrar
 	var btn_cerrar = _crear_boton_kawaii("CERRAR", Color(0.95, 0.8, 0.85))
 	btn_cerrar.pressed.connect(_on_cerrar_pressed)
-	btn_cerrar.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	vbox.add_child(btn_cerrar)
+	btn_cerrar.custom_minimum_size = Vector2(180, 55)
+	buttons_hbox.add_child(btn_cerrar)
 
+	vbox.add_child(buttons_hbox)
 	vbox.add_child(_crear_spacer(20))
 
 	# Animación de entrada
@@ -385,6 +397,22 @@ func _on_cerrar_pressed():
 
 	# Cerrar la UI
 	queue_free()
+
+func _on_nivel2_pressed():
+	# Despausar el juego
+	get_tree().paused = false
+
+	# Animación de salida
+	var tween = create_tween()
+	tween.tween_property(main_container, "modulate:a", 0.0, 0.3)
+	await tween.finished
+
+	# Cerrar la UI
+	queue_free()
+
+	# Ir al nivel 2
+	await get_tree().process_frame
+	get_tree().change_scene_to_file("res://scenes/main/Main.tscn")
 
 func _input(event):
 	# Permitir cerrar con ESC

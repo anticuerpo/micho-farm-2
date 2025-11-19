@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 # NPC Gatito de la tienda - Don Bigotes
 
-@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var animated_sprite: AnimatedSprite2D = $Sprite2D
 @onready var interactable: InteractableComponent = $InteractableComponent
 @onready var interaction_label: Label = $InteractionLabel
 
