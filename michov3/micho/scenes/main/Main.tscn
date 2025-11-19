@@ -120,10 +120,10 @@ script = ExtResource("3_q24mn")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="ShopEntrance" type="Area2D" parent="."]
+[node name="TiendaEntrance" type="Area2D" parent="."]
 position = Vector2(591, 370)
 script = ExtResource("9_ostsq")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ShopEntrance"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TiendaEntrance"]
 position = Vector2(-2, 3.5)
 shape = SubResource("RectangleShape2D_3km4f")

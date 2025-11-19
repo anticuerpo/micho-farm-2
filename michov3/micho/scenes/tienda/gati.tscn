@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://c65xk0evkh02n"]
+[gd_scene load_steps=7 format=3 uid="uid://c65xk0evkh02n"]
 
+[ext_resource type="Script" uid="uid://bv1dwc6kl17fu" path="res://scenes/characters/shop_cat.gd" id="1_bhkvu"]
 [ext_resource type="Texture2D" uid="uid://ofnguo4tml1w" path="res://assets/game/characters/gato-tienda.png" id="1_mq5rc"]
 [ext_resource type="PackedScene" uid="uid://gd8vc3vmis18" path="res://scenes/tienda/InteractableComponent.tscn" id="2_bhkvu"]
 
@@ -22,6 +23,7 @@ size = Vector2(15, 16)
 [node name="Gati" type="Node2D"]
 
 [node name="ShopCat" type="CharacterBody2D" parent="."]
+script = ExtResource("1_bhkvu")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="ShopCat"]
 sprite_frames = SubResource("SpriteFrames_mq5rc")

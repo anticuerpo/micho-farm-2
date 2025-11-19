@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://5v7kibf4h0hy"]
+
+[node name="TiendaUi" type="CanvasLayer"]
+process_mode = 3

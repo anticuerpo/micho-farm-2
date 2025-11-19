@@ -6,7 +6,7 @@ var main_container: Control
 var money_label: Label
 var shop_items: Array = []
 
-# Precios de mejoras (copiado de tienda.gd)
+# Precios de mejoras
 var mejoras_config = {
 	"velocidad": {
 		"nombre": "Botas Rápidas",
@@ -32,7 +32,7 @@ func _ready():
 	layer = 100
 	_crear_ui_tienda()
 	_actualizar_dinero()
-
+	
 	# Pausar el juego mientras está abierta la tienda
 	get_tree().paused = true
 
@@ -41,20 +41,20 @@ func _crear_ui_tienda():
 	main_container = Control.new()
 	main_container.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(main_container)
-
+	
 	# Fondo semi-transparente
 	var overlay = ColorRect.new()
 	overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
 	overlay.color = Color(0, 0, 0, 0.7)
 	main_container.add_child(overlay)
-
+	
 	# Fondo de color
 	var fondo = ColorRect.new()
 	fondo.set_anchors_preset(Control.PRESET_FULL_RECT)
 	fondo.color = Color(0.9, 0.85, 0.95)
 	fondo.modulate.a = 0.3
 	main_container.add_child(fondo)
-
+	
 	# Panel principal
 	var shop_panel = Panel.new()
 	shop_panel.custom_minimum_size = Vector2(700, 550)
@@ -62,23 +62,23 @@ func _crear_ui_tienda():
 	shop_panel.position = Vector2(-350, -275)
 	shop_panel.add_theme_stylebox_override("panel", _crear_panel_kawaii())
 	main_container.add_child(shop_panel)
-
+	
 	# VBox principal
 	var vbox = VBoxContainer.new()
 	vbox.set_anchors_preset(Control.PRESET_FULL_RECT)
 	vbox.add_theme_constant_override("separation", 20)
 	shop_panel.add_child(vbox)
-
+	
 	vbox.add_child(_crear_spacer(20))
-
+	
 	# Header
 	_crear_header(vbox)
-
+	
 	# Panel de dinero
 	_crear_panel_dinero(vbox)
-
+	
 	vbox.add_child(_crear_spacer(10))
-
+	
 	# Mensaje
 	var mensaje = Label.new()
 	mensaje.text = "Bienvenido a la tienda"
@@ -86,59 +86,56 @@ func _crear_ui_tienda():
 	mensaje.add_theme_font_size_override("font_size", 18)
 	mensaje.add_theme_color_override("font_color", Color(0.5, 0.4, 0.6))
 	vbox.add_child(mensaje)
-
+	
 	vbox.add_child(_crear_spacer(15))
-
+	
 	# Items
 	var items_container = VBoxContainer.new()
 	items_container.add_theme_constant_override("separation", 15)
 	items_container.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	vbox.add_child(items_container)
-
+	
 	_crear_item_mejora(items_container, "velocidad")
 	_crear_item_mejora(items_container, "capacidad_bolsa")
-
+	
 	vbox.add_child(_crear_spacer(20))
-
+	
 	# Botón cerrar
 	var btn_cerrar = _crear_boton_kawaii("CERRAR", Color(0.95, 0.8, 0.85))
 	btn_cerrar.pressed.connect(_on_cerrar_pressed)
 	btn_cerrar.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	vbox.add_child(btn_cerrar)
-
+	
 	vbox.add_child(_crear_spacer(20))
-
+	
 	# Animación de entrada
 	_animar_entrada(shop_panel)
-
-# [Copiar todas las funciones de tienda.gd aquí...]
-# Por brevedad, voy a incluir solo las esenciales
 
 func _crear_header(parent: Control):
 	var header_container = VBoxContainer.new()
 	header_container.add_theme_constant_override("separation", 5)
-
+	
 	var titulo = Label.new()
 	titulo.text = "TIENDA"
 	titulo.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	titulo.add_theme_font_size_override("font_size", 42)
 	titulo.add_theme_color_override("font_color", Color(0.5, 0.3, 0.6))
 	header_container.add_child(titulo)
-
+	
 	var subtitulo = Label.new()
 	subtitulo.text = "Mejora tus habilidades"
 	subtitulo.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	subtitulo.add_theme_font_size_override("font_size", 16)
 	subtitulo.add_theme_color_override("font_color", Color(0.6, 0.5, 0.7, 0.8))
 	header_container.add_child(subtitulo)
-
+	
 	parent.add_child(header_container)
 
 func _crear_panel_dinero(parent: Control):
 	var money_panel = Panel.new()
 	money_panel.custom_minimum_size = Vector2(250, 70)
 	money_panel.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-
+	
 	var style = StyleBoxFlat.new()
 	style.bg_color = Color(0.95, 0.95, 0.7, 0.9)
 	style.set_corner_radius_all(15)
@@ -151,22 +148,22 @@ func _crear_panel_dinero(parent: Control):
 	style.shadow_color = Color(0.4, 0.5, 0.4, 0.3)
 	style.shadow_offset = Vector2(0, 3)
 	money_panel.add_theme_stylebox_override("panel", style)
-
+	
 	var hbox = HBoxContainer.new()
 	hbox.position = Vector2(20, 15)
 	hbox.add_theme_constant_override("separation", 15)
-
+	
 	var icon = Label.new()
 	icon.text = "🌿"
 	icon.add_theme_font_size_override("font_size", 36)
 	hbox.add_child(icon)
-
+	
 	money_label = Label.new()
 	money_label.text = "0 Catnip"
 	money_label.add_theme_font_size_override("font_size", 28)
 	money_label.add_theme_color_override("font_color", Color(0.4, 0.6, 0.3))
 	hbox.add_child(money_label)
-
+	
 	money_panel.add_child(hbox)
 	parent.add_child(money_panel)
 
@@ -174,10 +171,10 @@ func _crear_item_mejora(parent: Control, tipo_mejora: String):
 	var config = mejoras_config[tipo_mejora]
 	var nivel_actual = _obtener_nivel_actual(tipo_mejora)
 	var precio_actual = _calcular_precio(tipo_mejora, nivel_actual)
-
+	
 	var item_panel = Panel.new()
 	item_panel.custom_minimum_size = Vector2(650, 100)
-
+	
 	var style = StyleBoxFlat.new()
 	style.bg_color = Color(1, 1, 1, 0.95)
 	style.set_corner_radius_all(20)
@@ -190,32 +187,32 @@ func _crear_item_mejora(parent: Control, tipo_mejora: String):
 	style.shadow_color = Color(0.5, 0.5, 0.5, 0.2)
 	style.shadow_offset = Vector2(0, 2)
 	item_panel.add_theme_stylebox_override("panel", style)
-
+	
 	var hbox = HBoxContainer.new()
 	hbox.position = Vector2(20, 20)
 	hbox.add_theme_constant_override("separation", 20)
-
+	
 	var emoji_label = Label.new()
 	emoji_label.text = config.emoji
 	emoji_label.add_theme_font_size_override("font_size", 48)
 	hbox.add_child(emoji_label)
-
+	
 	var info_vbox = VBoxContainer.new()
 	info_vbox.add_theme_constant_override("separation", 5)
 	info_vbox.custom_minimum_size = Vector2(280, 0)
-
+	
 	var nombre_label = Label.new()
 	nombre_label.text = config.nombre
 	nombre_label.add_theme_font_size_override("font_size", 22)
 	nombre_label.add_theme_color_override("font_color", Color(0.3, 0.3, 0.3))
 	info_vbox.add_child(nombre_label)
-
+	
 	var desc_label = Label.new()
 	desc_label.text = config.descripcion
 	desc_label.add_theme_font_size_override("font_size", 14)
 	desc_label.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
 	info_vbox.add_child(desc_label)
-
+	
 	var nivel_label = Label.new()
 	nivel_label.name = "NivelLabel"
 	if nivel_actual >= config.max_nivel:
@@ -226,20 +223,20 @@ func _crear_item_mejora(parent: Control, tipo_mejora: String):
 		nivel_label.add_theme_color_override("font_color", Color(0.4, 0.6, 0.8))
 	nivel_label.add_theme_font_size_override("font_size", 14)
 	info_vbox.add_child(nivel_label)
-
+	
 	hbox.add_child(info_vbox)
-
+	
 	var spacer = Control.new()
 	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	hbox.add_child(spacer)
-
+	
 	var btn_comprar = _crear_boton_compra(tipo_mejora, precio_actual, nivel_actual >= config.max_nivel)
 	btn_comprar.name = "BtnComprar"
 	hbox.add_child(btn_comprar)
-
+	
 	item_panel.add_child(hbox)
 	parent.add_child(item_panel)
-
+	
 	shop_items.append({
 		"tipo": tipo_mejora,
 		"panel": item_panel,
@@ -250,12 +247,12 @@ func _crear_item_mejora(parent: Control, tipo_mejora: String):
 func _crear_boton_compra(tipo_mejora: String, precio: int, max_nivel: bool) -> Button:
 	var btn = Button.new()
 	btn.custom_minimum_size = Vector2(160, 60)
-
+	
 	if max_nivel:
 		btn.text = "MÁXIMO"
 		btn.disabled = true
 		btn.add_theme_font_size_override("font_size", 16)
-
+		
 		var style = StyleBoxFlat.new()
 		style.bg_color = Color(0.7, 0.7, 0.7, 0.5)
 		style.set_corner_radius_all(15)
@@ -265,7 +262,7 @@ func _crear_boton_compra(tipo_mejora: String, precio: int, max_nivel: bool) -> B
 		btn.text = "%d\nComprar" % precio
 		btn.add_theme_font_size_override("font_size", 16)
 		btn.add_theme_color_override("font_color", Color(0.3, 0.5, 0.3))
-
+		
 		var style_normal = StyleBoxFlat.new()
 		style_normal.bg_color = Color(0.7, 0.9, 0.7)
 		style_normal.set_corner_radius_all(15)
@@ -275,17 +272,17 @@ func _crear_boton_compra(tipo_mejora: String, precio: int, max_nivel: bool) -> B
 		style_normal.border_width_bottom = 3
 		style_normal.border_color = Color(1, 1, 1, 0.8)
 		btn.add_theme_stylebox_override("normal", style_normal)
-
+		
 		var style_hover = style_normal.duplicate()
 		style_hover.bg_color = Color(0.7, 0.9, 0.7).lightened(0.15)
 		btn.add_theme_stylebox_override("hover", style_hover)
-
+		
 		var style_pressed = style_normal.duplicate()
 		style_pressed.bg_color = Color(0.7, 0.9, 0.7).darkened(0.1)
 		btn.add_theme_stylebox_override("pressed", style_pressed)
-
+		
 		btn.pressed.connect(_on_comprar_mejora.bind(tipo_mejora))
-
+	
 	return btn
 
 func _crear_panel_kawaii() -> StyleBoxFlat:
@@ -308,12 +305,12 @@ func _crear_boton_kawaii(texto: String, color: Color) -> Button:
 	btn.custom_minimum_size = Vector2(280, 55)
 	btn.add_theme_font_size_override("font_size", 18)
 	btn.add_theme_color_override("font_color", Color(0.3, 0.3, 0.3))
-
+	
 	var style_normal = StyleBoxFlat.new()
 	style_normal.bg_color = color
 	style_normal.set_corner_radius_all(20)
 	btn.add_theme_stylebox_override("normal", style_normal)
-
+	
 	return btn
 
 func _crear_spacer(altura: float) -> Control:
@@ -324,7 +321,7 @@ func _crear_spacer(altura: float) -> Control:
 func _animar_entrada(panel: Control):
 	panel.modulate.a = 0
 	panel.scale = Vector2(0.8, 0.8)
-
+	
 	var tween = create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(panel, "modulate:a", 1.0, 0.5)
@@ -332,12 +329,12 @@ func _animar_entrada(panel: Control):
 
 func _obtener_nivel_actual(tipo_mejora: String) -> int:
 	var valor_actual = SceneManager.player_data.mejoras.get(tipo_mejora, 1.0)
-
+	
 	if tipo_mejora == "velocidad":
 		return int((valor_actual - 1.0) / 0.2)
 	elif tipo_mejora == "capacidad_bolsa":
 		return int((valor_actual - 10) / 5)
-
+	
 	return 0
 
 func _calcular_precio(tipo_mejora: String, nivel_actual: int) -> int:
@@ -354,35 +351,129 @@ func _on_comprar_mejora(tipo_mejora: String):
 	var nivel_actual = _obtener_nivel_actual(tipo_mejora)
 	var precio = _calcular_precio(tipo_mejora, nivel_actual)
 	var catnip = SceneManager.player_data.catnip
-
+	
 	if catnip < precio:
-		print("No tienes suficiente catnip")
+		_mostrar_mensaje_error("No tienes suficiente catnip")
 		return
-
+	
 	if nivel_actual >= config.max_nivel:
-		print("Ya tienes el nivel máximo")
+		_mostrar_mensaje_error("Ya tienes el nivel máximo")
 		return
-
+	
 	# Realizar compra
 	SceneManager.player_data.catnip -= precio
-
+	
 	if tipo_mejora == "velocidad":
 		SceneManager.player_data.mejoras["velocidad"] += 0.2
 	elif tipo_mejora == "capacidad_bolsa":
 		SceneManager.player_data.mejoras["capacidad_bolsa"] += 5
-
+	
+	# Efectos de sonido
+	if has_node("/root/AudioManager") and AudioManager.has_method("play_sfx"):
+		AudioManager.play_sfx("points")
+	
+	_mostrar_mensaje_exito("¡Compra exitosa!")
+	
 	_actualizar_dinero()
-	print("¡Compra exitosa!")
+	_actualizar_item_ui(tipo_mejora)
+
+func _actualizar_item_ui(tipo_mejora: String):
+	for item in shop_items:
+		if item.tipo == tipo_mejora:
+			var config = mejoras_config[tipo_mejora]
+			var nivel_actual = _obtener_nivel_actual(tipo_mejora)
+			var precio_nuevo = _calcular_precio(tipo_mejora, nivel_actual)
+			
+			var nivel_label = item.nivel_label
+			if nivel_actual >= config.max_nivel:
+				nivel_label.text = "NIVEL MÁXIMO"
+				nivel_label.add_theme_color_override("font_color", Color(1.0, 0.7, 0.3))
+			else:
+				nivel_label.text = "Nivel: %d/%d" % [nivel_actual, config.max_nivel]
+			
+			var boton_viejo = item.boton
+			var parent = boton_viejo.get_parent()
+			var btn_nuevo = _crear_boton_compra(tipo_mejora, precio_nuevo, nivel_actual >= config.max_nivel)
+			btn_nuevo.name = "BtnComprar"
+			
+			var index = boton_viejo.get_index()
+			parent.remove_child(boton_viejo)
+			boton_viejo.queue_free()
+			parent.add_child(btn_nuevo)
+			parent.move_child(btn_nuevo, index)
+			
+			item.boton = btn_nuevo
+			
+			var tween = create_tween()
+			tween.tween_property(item.panel, "scale", Vector2(1.1, 1.1), 0.1)
+			tween.tween_property(item.panel, "scale", Vector2(1.0, 1.0), 0.1)
+			
+			break
+
+func _mostrar_mensaje_exito(texto: String):
+	var mensaje = Label.new()
+	mensaje.text = texto
+	mensaje.add_theme_font_size_override("font_size", 32)
+	mensaje.add_theme_color_override("font_color", Color(0.3, 0.8, 0.3))
+	mensaje.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	mensaje.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	mensaje.set_anchors_preset(Control.PRESET_CENTER)
+	mensaje.z_index = 1000
+	
+	mensaje.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.5))
+	mensaje.add_theme_constant_override("shadow_offset_x", 2)
+	mensaje.add_theme_constant_override("shadow_offset_y", 2)
+	
+	main_container.add_child(mensaje)
+	
+	mensaje.modulate.a = 0
+	mensaje.scale = Vector2(0.5, 0.5)
+	
+	var tween = create_tween()
+	tween.tween_property(mensaje, "modulate:a", 1.0, 0.2)
+	tween.tween_property(mensaje, "scale", Vector2(1.2, 1.2), 0.2)
+	tween.tween_property(mensaje, "modulate:a", 0.0, 0.3).set_delay(1.0)
+	
+	await tween.finished
+	mensaje.queue_free()
+
+func _mostrar_mensaje_error(texto: String):
+	var mensaje = Label.new()
+	mensaje.text = texto
+	mensaje.add_theme_font_size_override("font_size", 28)
+	mensaje.add_theme_color_override("font_color", Color(0.9, 0.3, 0.3))
+	mensaje.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	mensaje.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	mensaje.set_anchors_preset(Control.PRESET_CENTER)
+	mensaje.z_index = 1000
+	
+	mensaje.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.5))
+	mensaje.add_theme_constant_override("shadow_offset_x", 2)
+	mensaje.add_theme_constant_override("shadow_offset_y", 2)
+	
+	main_container.add_child(mensaje)
+	
+	mensaje.modulate.a = 0
+	var tween = create_tween()
+	tween.tween_property(mensaje, "modulate:a", 1.0, 0.1)
+	tween.tween_property(mensaje, "position:x", mensaje.position.x + 10, 0.05)
+	tween.tween_property(mensaje, "position:x", mensaje.position.x - 10, 0.05)
+	tween.tween_property(mensaje, "position:x", mensaje.position.x + 10, 0.05)
+	tween.tween_property(mensaje, "position:x", mensaje.position.x, 0.05)
+	tween.tween_property(mensaje, "modulate:a", 0.0, 0.3).set_delay(1.0)
+	
+	await tween.finished
+	mensaje.queue_free()
 
 func _on_cerrar_pressed():
 	# Despausar el juego
 	get_tree().paused = false
-
+	
 	# Animación de salida
 	var tween = create_tween()
 	tween.tween_property(main_container, "modulate:a", 0.0, 0.3)
 	await tween.finished
-
+	
 	# Cerrar la UI
 	queue_free()
 
