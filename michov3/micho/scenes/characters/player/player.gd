@@ -1,6 +1,6 @@
 class_name Player
 extends CharacterBody2D
-@onready var particulas = $ParticulasPisadas  # Asegúrate del nombre correcto
+@onready var particulas = $ParticulasPisadas if has_node("ParticulasPisadas") else null
 @export var current_tool: DataTypes.Tools = DataTypes.Tools.None
 @export var plant_scene: PackedScene  # Asigna la escena de la planta en el inspector
 var intentos_ahuyentar = 0  # Contador
@@ -35,10 +35,11 @@ func _process(delta):
 		last_interaction_time -= delta
 	if last_scare_time > 0:
 		last_scare_time -= delta
-	if velocity.length() > 10:
-		particulas.emitting = true
-	else:
-		particulas.emitting = false
+	if particulas:
+		if velocity.length() > 10:
+			particulas.emitting = true
+		else:
+			particulas.emitting = false
 
 # Ahuyentar enemigos con ESPACIO
 func attempt_scare_enemies():
