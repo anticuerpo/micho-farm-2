@@ -45,14 +45,22 @@ func _open_shop():
 
 	# Primero mostrar el diálogo
 	if has_node("/root/Dialogic"):
-		Dialogic.timeline_ended.connect(_abrir_ui_tienda)
 		Dialogic.start("tienda_dialogo")
+		# Esperar a que termine el diálogo
+		await Dialogic.timeline_ended
+		_abrir_ui_tienda()
 	else:
 		# Si no hay Dialogic, abrir directamente
 		_abrir_ui_tienda()
 
 func _abrir_ui_tienda():
 	print("Abriendo UI de tienda...")
+
+	# Asegurarse de que no haya otra tienda abierta
+	var existing_shop = get_tree().root.get_node_or_null("TiendaUI")
+	if existing_shop:
+		print("Ya hay una tienda abierta")
+		return
 
 	# Crear la UI de tienda como overlay
 	var shop_ui_scene = load("res://scenes/tienda/tienda_ui.tscn")
