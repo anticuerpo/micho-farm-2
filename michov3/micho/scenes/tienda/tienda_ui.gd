@@ -399,20 +399,23 @@ func _on_cerrar_pressed():
 	queue_free()
 
 func _on_nivel2_pressed():
+	print("Botón IR A NIVEL 2 presionado")
+
 	# Despausar el juego
 	get_tree().paused = false
+	print("Juego despausado")
 
 	# Animación de salida
 	var tween = create_tween()
 	tween.tween_property(main_container, "modulate:a", 0.0, 0.3)
 	await tween.finished
+	print("Animación completada")
 
-	# Cerrar la UI
-	queue_free()
-
-	# Ir al nivel 2
-	await get_tree().process_frame
+	# Ir al nivel 2 (Main.tscn con mejoras aplicadas)
+	print("Cambiando a escena Main.tscn...")
 	get_tree().change_scene_to_file("res://scenes/main/Main.tscn")
+
+	# No es necesario hacer queue_free porque el cambio de escena limpia todo
 
 func _input(event):
 	# Permitir cerrar con ESC
