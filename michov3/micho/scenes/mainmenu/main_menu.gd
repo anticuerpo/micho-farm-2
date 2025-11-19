@@ -72,11 +72,6 @@ func _ready():
 	var btn_iniciar = _crear_boton_kawaii("🌱 INICIAR JUEGO 🌱", Color(0.6, 0.9, 0.6))
 	btn_iniciar.pressed.connect(_on_start_pressed)
 	botones_container.add_child(btn_iniciar)
-	
-	# Botón Tienda
-	var btn_tienda = _crear_boton_kawaii("🏪 TIENDA 🏪", Color(0.9, 0.7, 0.9))
-	btn_tienda.pressed.connect(_on_tienda_pressed)
-	botones_container.add_child(btn_tienda)
 
 	# Botón Opciones (opcional, cute)
 	var btn_opciones = _crear_boton_kawaii("⚙️ OPCIONES", Color(0.9, 0.85, 0.6))
@@ -256,21 +251,6 @@ func _on_start_pressed():
 	await tween.finished
 	
 	get_tree().change_scene_to_file("res://scenes/main/Main.tscn")
-
-func _on_tienda_pressed():
-	print("🏪 Abriendo tienda...")
-
-	# Dar algo de catnip para probar la tienda
-	if has_node("/root/SceneManager"):
-		if SceneManager.player_data.catnip == 0:
-			SceneManager.player_data.catnip = 200  # Dinero inicial para probar
-
-	# Animación de salida
-	var tween = create_tween()
-	tween.tween_property(self, "modulate:a", 0.0, 0.3)
-	await tween.finished
-
-	get_tree().change_scene_to_file("res://scenes/tienda/tienda.tscn")
 
 func _on_opciones_pressed():
 	print("⚙️ Abriendo opciones...")
