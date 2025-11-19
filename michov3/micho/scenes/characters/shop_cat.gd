@@ -68,10 +68,14 @@ func _abrir_ui_tienda():
 		print("Ya hay una tienda abierta")
 		return
 
+	print("Cargando escena tienda_ui.tscn...")
 	# Crear la UI de tienda como overlay
 	var shop_ui_scene = load("res://scenes/tienda/tienda_ui.tscn")
 	if shop_ui_scene:
+		print("Escena cargada, instanciando...")
 		var shop_ui = shop_ui_scene.instantiate()
+		print("Instanciada, agregando al árbol...")
 		get_tree().root.add_child(shop_ui)
+		print("¡Tienda agregada al árbol correctamente!")
 	else:
-		push_error("No se pudo cargar la escena tienda_ui.tscn")
+		print("ERROR: No se pudo cargar la escena tienda_ui.tscn")
