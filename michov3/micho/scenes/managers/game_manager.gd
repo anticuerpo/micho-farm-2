@@ -397,25 +397,25 @@ func _mostrar_pantalla_victoria():
 	var spacer2 = Control.new()
 	spacer2.custom_minimum_size = Vector2(0, 10)
 	vbox_victoria.add_child(spacer2)
-	
-	# Botón ir a tienda
-	var btn_tienda = Button.new()
-	btn_tienda.text = "🏪 IR A LA TIENDA 🏪"
-	btn_tienda.custom_minimum_size = Vector2(250, 50)
-	btn_tienda.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	btn_tienda.add_theme_font_size_override("font_size", 18)
-	
-	var style_btn_tienda = StyleBoxFlat.new()
-	style_btn_tienda.bg_color = Color(0.9, 0.7, 0.9)
-	style_btn_tienda.set_corner_radius_all(15)
-	style_btn_tienda.border_width_left = 3
-	style_btn_tienda.border_width_top = 3
-	style_btn_tienda.border_width_right = 3
-	style_btn_tienda.border_width_bottom = 3
-	style_btn_tienda.border_color = Color(1, 1, 1, 0.8)
-	btn_tienda.add_theme_stylebox_override("normal", style_btn_tienda)
-	
-	btn_tienda.pressed.connect(func():
+
+	# Botón continuar (volver al mapa)
+	var btn_continuar = Button.new()
+	btn_continuar.text = "CONTINUAR"
+	btn_continuar.custom_minimum_size = Vector2(250, 50)
+	btn_continuar.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	btn_continuar.add_theme_font_size_override("font_size", 18)
+
+	var style_btn_continuar = StyleBoxFlat.new()
+	style_btn_continuar.bg_color = Color(0.6, 0.9, 0.6)
+	style_btn_continuar.set_corner_radius_all(15)
+	style_btn_continuar.border_width_left = 3
+	style_btn_continuar.border_width_top = 3
+	style_btn_continuar.border_width_right = 3
+	style_btn_continuar.border_width_bottom = 3
+	style_btn_continuar.border_color = Color(1, 1, 1, 0.8)
+	btn_continuar.add_theme_stylebox_override("normal", style_btn_continuar)
+
+	btn_continuar.pressed.connect(func():
 		# Animación de fade out
 		var fade_tween = create_tween()
 		fade_tween.set_parallel(true)
@@ -423,37 +423,11 @@ func _mostrar_pantalla_victoria():
 		fade_tween.tween_property(victoria_panel, "modulate:a", 0.0, 0.3)
 		await fade_tween.finished
 
-		# Cambiar a la tienda
-		get_tree().change_scene_to_file("res://scenes/tienda/tienda.tscn")
-	)
-	
-	vbox_victoria.add_child(btn_tienda)
-	
-	# Botón reiniciar
-	var btn_reiniciar = Button.new()
-	btn_reiniciar.text = "🔄 JUGAR DE NUEVO 🔄"
-	btn_reiniciar.custom_minimum_size = Vector2(250, 50)
-	btn_reiniciar.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	btn_reiniciar.add_theme_font_size_override("font_size", 18)
-	
-	var style_btn = StyleBoxFlat.new()
-	style_btn.bg_color = Color(0.6, 0.9, 0.6)
-	style_btn.set_corner_radius_all(15)
-	style_btn.border_width_left = 3
-	style_btn.border_width_top = 3
-	style_btn.border_width_right = 3
-	style_btn.border_width_bottom = 3
-	style_btn.border_color = Color(1, 1, 1, 0.8)
-	btn_reiniciar.add_theme_stylebox_override("normal", style_btn)
-	
-	btn_reiniciar.pressed.connect(func():
 		overlay.queue_free()
 		victoria_panel.queue_free()
-		await get_tree().process_frame
-		get_tree().reload_current_scene()
 	)
-	
-	vbox_victoria.add_child(btn_reiniciar)
+
+	vbox_victoria.add_child(btn_continuar)
 	
 	# Animación de entrada
 	victoria_panel.modulate.a = 0
